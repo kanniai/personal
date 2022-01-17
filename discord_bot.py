@@ -6,6 +6,7 @@ from discord.ext import commands
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 from matplotlib.gridspec import GridSpec
+from matplotlib.ticker import MaxNLocator
 import discord
 import numpy as np
 
@@ -79,8 +80,8 @@ async def print_help(message):
                " %help: open this window\n" \
                " %results: overview of the meme statistics\n" \
                " %<name>: individual statistics\n" \
-               "   - Select name: [matias, antti, mikke, eetu, niklas, aatu j, aatu w, eemil, masa]" \
-               "     Example input: %matias"
+               "   - Select name: [matias, antti, mikke, eetu, niklas, aatu j, aatu w, eemil, masa]\n" \
+               "     - Example input: %matias"
     await message.channel.send(help_msg)
 
 
@@ -252,8 +253,7 @@ def plot_individual(data, index):
     # Change the direction of the data to go from left to right
     data.reverse()
 
-    fig = plt.figure(figsize=(15, 6))
-    ax = fig.add_subplot()
+    ax = plt.figure(figsize=(15, 6)).gca()
     n = np.arange(1, len(data)+1)
     plt.plot(n, data, linestyle='-', marker='o', color='black')
 
@@ -261,6 +261,7 @@ def plot_individual(data, index):
     ax.set_ylabel("Tier")
     # Custom y-labels
     plt.yticks(np.arange(1, 16/3, 1/3), get_grades())
+    ax.xaxis.set_major_locator(MaxNLocator(integer=True))
     plt.title("Meme scores of "+str(get_author_ids()[index][1]))
     plt.savefig('individual.png')
     return
