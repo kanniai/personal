@@ -3,6 +3,7 @@
 
 import discord
 from discord.ext import commands
+from dotenv import load_dotenv
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 from matplotlib.gridspec import GridSpec
@@ -10,8 +11,8 @@ from matplotlib.ticker import MaxNLocator
 import numpy as np
 import os
 
-
-TOKEN = 'OTAwNzMxMjk2OTI0NDM0NDUy.YXFlYw.BVjx8rFtQxpStDJ_aQjZkqj3fXI'
+load_dotenv()
+TOKEN = os.getenv("DISCORD_TOKEN")
 COMMAND_PREFIX = '%'
 
 bot = commands.Bot(command_prefix=COMMAND_PREFIX)
